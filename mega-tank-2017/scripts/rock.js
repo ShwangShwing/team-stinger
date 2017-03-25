@@ -5,7 +5,7 @@ function getRock(initialPositionX, initialPositionY, rockSize) {
     const width = rockSize; // rock size
 
     function drawRock(context) {
-      drawRotatingImg(context, rockPic, posX, posY, 0, 56, 56);
+      drawRotatingImg(context, rockPic, posX, posY, 0, 35, 35);
     }
     return {
         getPositionX: function() {
