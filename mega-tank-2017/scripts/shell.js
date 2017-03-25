@@ -10,6 +10,12 @@ function getShell(initialPositionX, initialPositionY, shellWidth, shellDirection
     let shellHit = false;
 
     return {
+        // If this is defined and true than when colliding 
+        // with another object, the other object's onColide method won't be invoked.
+        // It is true for shells as they manage their own destruction when they colide
+        // with another object by using their own onCollideMethod
+        isPassthough: true,
+
         getPositionX: function() {
             return positionX;
         },
@@ -46,10 +52,12 @@ function getShell(initialPositionX, initialPositionY, shellWidth, shellDirection
 
         onColide: function(otherObject) {
             if (!shellHit) {
+                // console.log('shell colides');
                 shellHit = true;
                 otherObject.takeDamage(damage);
+            } else {
+                // console.log('shell has already collided!!!!!!!!!!!!!!!!!1');
             }
-            //console.log('shell colides');
         },
 
         takeDamage: function(damagePoints) {
@@ -57,7 +65,8 @@ function getShell(initialPositionX, initialPositionY, shellWidth, shellDirection
         },
 
         canRemove: function() {
-            return shellHit == true;
+            //console.log(`canRemove shall return ${shellHit}`);
+            return shellHit;
         }
     }
 }

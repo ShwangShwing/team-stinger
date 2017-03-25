@@ -55,8 +55,13 @@ function getGameEngine(gameCanvas) {
                     // console.log('object2TopBorder =' + object2TopBorder);
                     // console.log('object2BottomBorder =' + object2BottomBorder);
 
-                    object1.onColide(object2);
-                    object2.onColide(object1);
+                    // don't invoke onColide when coliding with passthrough objects (like shells)
+                    if (!object2.isPassthough) {
+                        object1.onColide(object2);
+                    }
+                    if (!object1.isPassthough) {
+                        object2.onColide(object1);
+                    }
                 }
             }
         }
