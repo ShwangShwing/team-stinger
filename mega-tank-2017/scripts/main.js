@@ -12,9 +12,7 @@ window.onload = function() {
 
 function startNewGame() {
     clearInterval(gameInteval);
-    // Remove start screen
-    var startScreen = document.getElementById('start-game');
-    startScreen.style.display = 'none';
+    removeStartScreen();
 
     gameEngine.setupNewGame();
 
@@ -31,4 +29,13 @@ function gameLoop() {
         console.log('player is dead');
         clearInterval(gameInteval);
     }
+}
+
+function removeStartScreen() {
+    var startScreen = document.getElementById('start-game');
+    var startSound = new Audio('./sounds/start.wav')
+    startSound.play();
+    
+    startScreen.style.display = 'none';
+    soundTrack.pause();
 }
