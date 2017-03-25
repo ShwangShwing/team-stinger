@@ -10,7 +10,7 @@ function getShell(initialPositionX, initialPositionY, shellWidth, shellDirection
     let shellHit = false;
 
     return {
-        // If this is defined and true than when colliding 
+        // If this is defined and true than when colliding
         // with another object, the other object's onColide method won't be invoked.
         // It is true for shells as they manage their own destruction when they colide
         // with another object by using their own onCollideMethod

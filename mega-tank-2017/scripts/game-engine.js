@@ -86,12 +86,18 @@ function getGameEngine(gameCanvas) {
                 fieldCanvas.width / 2, fieldCanvas.height + fieldBordersWidth / 2, fieldBordersWidth);
 
             const leftFieldBorder = getInvisibleWall(-fieldBordersWidth / 2, fieldCanvas.height / 2, fieldBordersWidth);
-            
-            let bricks = getBricks(700, 200);
-            playerTank = getPlayerTank(390, 250, 100, launchShell);
-            
 
-            fieldObjects.push(topFieldBorder, rightFieldBorder, bottomFieldBorder, leftFieldBorder, playerTank, bricks);
+            let bricks = getBricks(700, 200);
+
+            const rockOne = getRock(1000, 300, 75)
+            const rockTwo = getRock(200, 400, 75)
+
+            playerTank = getPlayerTank(390, 250, 100, launchShell);
+
+
+
+            fieldObjects.push(topFieldBorder, rightFieldBorder, bottomFieldBorder, leftFieldBorder, playerTank, bricks, rockOne, rockTwo);
+
         },
 
         startOrResumeGame: function() {
