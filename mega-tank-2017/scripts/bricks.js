@@ -1,7 +1,10 @@
-function getBricks(initialPositionX, initialPositionY) {
+function getBricks(initialPositionX, initialPositionY, bricksSize) {
     let positionX = initialPositionX;
     let positionY = initialPositionY;
     let health = 100;
+
+    const width = bricksSize;
+
     return {
         getPositionX: function() {
             return positionX;
@@ -12,7 +15,7 @@ function getBricks(initialPositionX, initialPositionY) {
         },
 
         getWidth: function() {
-            return bricksPic.width;
+            return width;
         },
 
         getHealth: function() {
@@ -36,7 +39,6 @@ function getBricks(initialPositionX, initialPositionY) {
         },
 
         onColide: function(otherObject) {
-
         },
 
         takeDamage: function(damagePoints) {
