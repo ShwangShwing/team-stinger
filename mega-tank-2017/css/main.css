@@ -9,7 +9,7 @@ html, body {
 }
 
 #start-game {
-    width: 800px;
+    width: 1300px;
     height: 600px;
     position: absolute;
     top: 0;
@@ -21,12 +21,12 @@ html, body {
 
 #start-btn {
     position: absolute;
-    top: 325px;
-    left: 315px;
+    top: 370px;
+    left: 515px;
     font-family: Pixeled;
     border: 0;
     background: 0;
-    font-size: 30px;
+    font-size: 50px;
     color: #fff;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
     outline: none;
