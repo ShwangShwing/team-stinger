@@ -24,7 +24,7 @@ function getBricks(initialPositionX, initialPositionY) {
         },
 
         draw: function() {
-            drawRotatingImg(context, bricksPic, positionX, positionY, 0, 56, 56);
+            drawRotatingImg(context, bricksPic, positionX, positionY, 0, 24, 24);
         },
 
         onColide: function(otherObject) {
