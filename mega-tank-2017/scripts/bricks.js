@@ -1,7 +1,7 @@
 function getBricks(initialPositionX, initialPositionY) {
     let positionX = initialPositionX;
     let positionY = initialPositionY;
-    let hitted = false;
+    let health = 100;
     return {
         getPositionX: function() {
             return positionX;
@@ -16,7 +16,7 @@ function getBricks(initialPositionX, initialPositionY) {
         },
 
         getHealth: function() {
-            return 1;
+            return health;
         },
 
         advanceOneFrame: function() {
@@ -27,20 +27,16 @@ function getBricks(initialPositionX, initialPositionY) {
             drawRotatingImg(context, bricksPic, positionX, positionY, 0, 56, 56);
         },
 
-        onColide: function(otherObject) {            
-            
+        onColide: function(otherObject) {
+
         },
 
         takeDamage: function(damagePoints) {
-            if (!hitted) {
-                hitted = true;
-            } else {
-                // console.log('shell has already collided!!!!!!!!!!!!!!!!!1');
-            }
+            health -= damagePoints;
         },
 
         canRemove: function() {
-            return hitted;
+            return health <= 0;
         }
     }
 }

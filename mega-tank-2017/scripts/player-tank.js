@@ -20,7 +20,8 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
     const CANNON_THICK = 15;
     const CANNON_LENGTH = 100;
-    let cannonAng = 0;;
+    const CANNON_TURN_RATE = 0.060;
+    let cannonAngle = 0;;
 
     let framesBeforeMachineGunCanShootAgain = 0;
     const MACHINE_GUN_RELOAD_TIME_IN_FRAMES = 3;
@@ -57,8 +58,49 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
     // INPUT FUNCTIONS
     function aim() {
-        let toAng = Math.atan2(mouseY - tankCenterPositionY, mouseX - tankCenterPositionX);
-        if (toAng !== cannonAng) cannonAng = toAng;
+        let aimAngle = Math.atan2(mouseY - tankCenterPositionY, mouseX - tankCenterPositionX);
+        if (aimAngle !== cannonAngle) {
+            // this is the difference between the desired cannon angle and the current angle
+            let angleDifference;
+            if (aimAngle >= 0 && cannonAngle >= 0) {
+                angleDifference = aimAngle - cannonAngle;
+            } else if (aimAngle >= 0 && cannonAngle < 0) {
+                angleDifference = aimAngle - (2 * Math.PI + cannonAngle);
+            } else if (aimAngle < 0 && cannonAngle >= 0) {
+                angleDifference = (2 * Math.PI + aimAngle) - cannonAngle;
+            } else if (aimAngle < 0 && cannonAngle < 0) {
+                angleDifference = (2 * Math.PI + aimAngle) - (2 * Math.PI + cannonAngle);
+            }
+
+            let newCannonAngle = cannonAngle;
+            if (angleDifference > 0 && angleDifference < Math.PI ||
+                angleDifference < 0 && angleDifference < -Math.PI) {
+                // clockwise
+                if (Math.abs(angleDifference) < CANNON_TURN_RATE) {
+                    newCannonAngle = aimAngle;
+                } else {
+                    newCannonAngle = cannonAngle + CANNON_TURN_RATE;
+                }
+            } else {
+                // counterclockwise
+                if (Math.abs(angleDifference) < CANNON_TURN_RATE) {
+                    newCannonAngle = aimAngle;
+                } else {
+                    newCannonAngle = cannonAngle - CANNON_TURN_RATE;
+                }
+            }
+
+            // normalize cannon angle so it lies between -PI and PI
+            while (newCannonAngle < -Math.PI) {
+                newCannonAngle += 2 * Math.PI;
+            }
+
+            while (newCannonAngle > Math.PI) {
+                newCannonAngle -= 2 * Math.PI;
+            }
+
+            cannonAngle = newCannonAngle;
+        }
     }
 
     function handleMouse(evt) {
@@ -75,9 +117,9 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
             // reloading
             return;
         }
-        launchShell(tankCenterPositionX + Math.cos(cannonAng) * shootDistance,
-            tankCenterPositionY + Math.sin(cannonAng) * shootDistance,
-            cannonAng);
+        launchShell(tankCenterPositionX + Math.cos(cannonAngle) * shootDistance,
+            tankCenterPositionY + Math.sin(cannonAngle) * shootDistance,
+            cannonAngle);
         framesBeforeCannonCanShootAgain = CANNON_RELOAD_TIME_IN_FRAMES;
         shotAudio.play();
     }
@@ -193,7 +235,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     }
 
     function drawCannon(context) {
-        drawRotatingImg(context, cannonPic, tankCenterPositionX, tankCenterPositionY, cannonAng, cannonPic.width * 0.25, cannonPic.height / 2);
+        drawRotatingImg(context, cannonPic, tankCenterPositionX, tankCenterPositionY, cannonAngle, cannonPic.width * 0.25, cannonPic.height / 2);
 
         // *** option with simple rectangle instead of cannonPic ***
         // drawRotatingObj(tankX, tankY, cannonAng, CANNON_LENGTH * 0.1, CANNON_THICK/2, CANNON_LENGTH, CANNON_THICK, 'OliveDrab');
@@ -212,9 +254,11 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         }
 
         if (keyHeld_TurnLeft) {
+            cannonAngle -= TURN_RATE;
             tankAng -= TURN_RATE;
         }
         if (keyHeld_TurnRight) {
+            cannonAngle += TURN_RATE;
             tankAng += TURN_RATE;
         }
 
