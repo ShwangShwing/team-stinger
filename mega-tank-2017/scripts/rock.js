@@ -46,7 +46,7 @@ function getRock(initialPositionX, initialPositionY) {
         },
 
         onColide: function(otherObject) {
-            //The rock is stationary, therefore only other objects collide with it.
+          otherObject.takeDamage(1);
         },
 
         takeDamage: function(damagePoints) {
