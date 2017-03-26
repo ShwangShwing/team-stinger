@@ -6,6 +6,7 @@ var mediumBrokenBricksPic = document.createElement('img');
 var bricksPic = document.createElement('img');
 var brokenBricksPic = document.createElement('img');
 var rockPic = document.createElement('img');
+var grassPatternPic = document.createElement('img');
 
 var picsToLoad = 0; // set default to 0
 
@@ -21,7 +22,8 @@ function loadGraphics() {
         { name: brokenBricksPic, file: "broken-bricks.png" },
         { name: tankPic, file: "tank.png" },
         { name: cannonPic, file: "cannon.png" },
-        { name: rockPic, file: "rock.png"}
+        { name: rockPic, file: "rock.png" },
+        { name: grassPatternPic, file: "grass-pattern.jpg" }
     ];
 
     picsToLoad = imgList.length;

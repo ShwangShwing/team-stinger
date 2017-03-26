@@ -136,7 +136,9 @@ function getGameEngine(gameCanvas) {
 
         drawFieldAndObjects: function() {
             let context = fieldCanvas.getContext('2d');
-            drawRect(context, 0, 0, fieldCanvas.width, fieldCanvas.height, 'DarkGray');
+            drawRect(context, 0, 0, fieldCanvas.width, fieldCanvas.height, 'green');
+
+            context.drawImage(grassPatternPic, 0, 0);
 
             fieldObjects.forEach(obj => obj.draw(fieldCanvas));
 
@@ -146,7 +148,7 @@ function getGameEngine(gameCanvas) {
                     pauseGameTextLastDisplayTime = nowTimeStamp;
                 }
                 if (nowTimeStamp - pauseGameTextLastDisplayTime < PAUSE_GAME_TEXT_BLINK_TIME_MS) {
-                    drawText(context, "Game paused. Press spacebar to resume.", 20, 20, 'darkred');
+                    drawText(context, "Game paused. Press spacebar to resume.", 20, 20, 'red');
                 }
             }
         },

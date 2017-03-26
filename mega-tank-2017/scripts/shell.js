@@ -47,7 +47,7 @@ function getShell(initialPositionX, initialPositionY, shellWidth, shellDirection
                 width / 2,
                 width,
                 width,
-                'Gray');
+                'black');
         },
 
         onColide: function(otherObject) {
