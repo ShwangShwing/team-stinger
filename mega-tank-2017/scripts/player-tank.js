@@ -11,6 +11,12 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     var keyHeld_TurnLeft = false;
     var keyHeld_TurnRight = false;
 
+    // don't rotate the cannon towards the mouse
+    let isManualAim = false;
+    // manual rotation:
+    let rotateCannonClockwise = false;
+    let rotateCannonCounterclockwise = false;
+
     // mouse flags
     let hasLeftMouseButtonBeenClicked = false;
     let isRightMouseButtonDown = false;
@@ -58,6 +64,28 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
     // INPUT FUNCTIONS
     function aim() {
+        if (isManualAim) {
+            let newCannonAngle = cannonAngle;
+
+            if (rotateCannonClockwise) {
+                newCannonAngle += CANNON_TURN_RATE;
+            } else if (rotateCannonCounterclockwise) {
+                newCannonAngle -= CANNON_TURN_RATE;
+            }
+
+            // normalize cannon angle so it lies between -PI and PI
+            while (newCannonAngle < -Math.PI) {
+                newCannonAngle += 2 * Math.PI;
+            }
+
+            while (newCannonAngle > Math.PI) {
+                newCannonAngle -= 2 * Math.PI;
+            }
+
+            cannonAngle = newCannonAngle;
+            return;
+        }
+
         let aimAngle = Math.atan2(mouseY - tankCenterPositionY, mouseX - tankCenterPositionX);
         if (aimAngle !== cannonAngle) {
             // this is the difference between the desired cannon angle and the current angle
@@ -162,7 +190,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     }
 
     function keyPressed(evt) {
-        //console.log("key pressed: " + evt.keyCode);
+        // console.log("key pressed: ", evt);
 
         if (evt.keyCode == KEY_A) {
             keyHeld_TurnLeft = true;
@@ -176,11 +204,20 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         if (evt.keyCode == KEY_S) {
             keyHeld_Reverse = true;
         }
+        if (evt.key == 'Shift') {
+            isManualAim = true;
+        }
+        if (evt.code == 'KeyQ') {
+            rotateCannonCounterclockwise = true;
+        }
+        if (evt.code == 'KeyE') {
+            rotateCannonClockwise = true;
+        }
         evt.preventDefault();
     }
 
     function keyReleased(evt) {
-        //console.log("key released: " + evt.keyCode);
+        //console.log("key released: ", evt);
 
         if (evt.keyCode == KEY_A) {
             keyHeld_TurnLeft = false;
@@ -193,6 +230,15 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         }
         if (evt.keyCode == KEY_S) {
             keyHeld_Reverse = false;
+        }
+        if (evt.key == 'Shift') {
+            isManualAim = false;
+        }
+        if (evt.code == 'KeyQ') {
+            rotateCannonCounterclockwise = false;
+        }
+        if (evt.code == 'KeyE') {
+            rotateCannonClockwise = false;
         }
         evt.preventDefault();
     }
