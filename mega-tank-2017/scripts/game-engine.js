@@ -104,8 +104,8 @@ function getGameEngine(gameCanvas) {
                 bricksWall.push(getBricks(700, 100 + (i * 50), 50))
             }
 
-            const rockOne = getRock(1000, 300, 75)
-            const rockTwo = getRock(200, 400, 75)
+            const rockOne = getRock(1000, 300)
+            const rockTwo = getRock(200, 400)
 
             playerTank = getPlayerTank(390, 250, 100, launchShell);
 

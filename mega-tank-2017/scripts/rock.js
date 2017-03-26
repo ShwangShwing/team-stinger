@@ -1,11 +1,23 @@
-function getRock(initialPositionX, initialPositionY, rockSize) {
-    let posX = initialPositionX; // coord X
-    let posY = initialPositionY; // coord Y
+function getRock(initialPositionX, initialPositionY) {
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    var posX, posY
 
-    const width = rockSize; // rock size
+    do {
+      posX = getRandomInt(100, 1200)
+    }
+    while (posX > 330 && posX < 450)
+
+    do {
+      posY = getRandomInt(100, 500)
+    }
+    while (posY > 190 && posY < 310)
+
+    const width = 75; // rock size
 
     function drawRock(context) {
-      drawRotatingImg(context, rockPic, posX, posY, 0, 35, 35);
+        drawRotatingImg(context, rockPic, posX, posY, 0, 35, 35);
     }
     return {
         getPositionX: function() {
