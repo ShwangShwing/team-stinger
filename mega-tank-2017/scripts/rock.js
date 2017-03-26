@@ -7,12 +7,12 @@ function getRock(initialPositionX, initialPositionY) {
     do {
       posX = getRandomInt(100, 1200)
     }
-    while (posX > 330 && posX < 450)
+    while ((posX > 330 && posX < 450) && (posX > 675 && posX < 725))
 
     do {
       posY = getRandomInt(100, 500)
     }
-    while (posY > 190 && posY < 310)
+    while ((posY > 190 && posY < 310) && (posY > 125 && posY < 375))
 
     const width = 75; // rock size
 
