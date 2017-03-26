@@ -16,6 +16,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     // manual rotation:
     let rotateCannonClockwise = false;
     let rotateCannonCounterclockwise = false;
+    let doParkCannon = false; // when this is true align the cannon with the tank
 
     // mouse flags
     let hasLeftMouseButtonBeenClicked = false;
@@ -64,29 +65,30 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
     // INPUT FUNCTIONS
     function aim() {
+        let aimAngle = cannonAngle;
+
         if (isManualAim) {
-            let newCannonAngle = cannonAngle;
-
-            if (rotateCannonClockwise) {
-                newCannonAngle += CANNON_TURN_RATE;
-            } else if (rotateCannonCounterclockwise) {
-                newCannonAngle -= CANNON_TURN_RATE;
+            if (doParkCannon) {
+                aimAngle = tankAng;
+            } else {
+                if (rotateCannonClockwise) {
+                    aimAngle += CANNON_TURN_RATE;
+                } else if (rotateCannonCounterclockwise) {
+                    aimAngle -= CANNON_TURN_RATE;
+                }
             }
 
-            // normalize cannon angle so it lies between -PI and PI
-            while (newCannonAngle < -Math.PI) {
-                newCannonAngle += 2 * Math.PI;
+            // normalize aim angle so it lies between -PI and PI
+            while (aimAngle < -Math.PI) {
+                aimAngle += 2 * Math.PI;
             }
 
-            while (newCannonAngle > Math.PI) {
-                newCannonAngle -= 2 * Math.PI;
+            while (aimAngle > Math.PI) {
+                aimAngle -= 2 * Math.PI;
             }
-
-            cannonAngle = newCannonAngle;
-            return;
+        } else {
+            aimAngle = Math.atan2(mouseY - tankCenterPositionY, mouseX - tankCenterPositionX);
         }
-
-        let aimAngle = Math.atan2(mouseY - tankCenterPositionY, mouseX - tankCenterPositionX);
         if (aimAngle !== cannonAngle) {
             // this is the difference between the desired cannon angle and the current angle
             let angleDifference;
@@ -209,9 +211,14 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         }
         if (evt.code == 'KeyQ') {
             rotateCannonCounterclockwise = true;
+            doParkCannon = false;
         }
         if (evt.code == 'KeyE') {
             rotateCannonClockwise = true;
+            doParkCannon = false;
+        }
+        if (evt.key == 'Alt') {
+            doParkCannon = true;
         }
         evt.preventDefault();
     }
@@ -233,6 +240,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         }
         if (evt.key == 'Shift') {
             isManualAim = false;
+            doParkCannon = false;
         }
         if (evt.code == 'KeyQ') {
             rotateCannonCounterclockwise = false;
@@ -310,6 +318,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
         tankCenterPositionX += Math.cos(tankAng) * tankSpeed;
         tankCenterPositionY += Math.sin(tankAng) * tankSpeed;
+        console.log("Tank angle: " + tankAng);
     }
 
     return {
