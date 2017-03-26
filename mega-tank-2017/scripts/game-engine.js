@@ -106,8 +106,8 @@ function getGameEngine(gameCanvas) {
 
             const enemyTurret = getTurret(200, 200, 50);
 
-            const rockOne = getRock(1000, 300)
-            const rockTwo = getRock(200, 400)
+            const rockOne = getRock(1000, 300);
+            const rockTwo = getRock(200, 400);
 
             playerTank = getPlayerTank(390, 250, 100, launchShell);
 
