@@ -101,17 +101,25 @@ function getGameEngine(gameCanvas) {
 
             const bricksWall = [];
             for (let i = 1; i <= 5; i += 1) {
-                bricksWall.push(getBricks(700, 100 + (i * 50), 50))
+                bricksWall.push(getBricks(700, 100 + (i * 50), 50));
             }
+
+            const enemyTurret = getTurret(200, 200, 50);
 
             const rockOne = getRock(1000, 300)
             const rockTwo = getRock(200, 400)
 
             playerTank = getPlayerTank(390, 250, 100, launchShell);
 
-
-            fieldObjects.push(topFieldBorder, rightFieldBorder, bottomFieldBorder, leftFieldBorder, playerTank, ...bricksWall, rockOne, rockTwo);
-
+            fieldObjects.push(topFieldBorder,
+                rightFieldBorder,
+                bottomFieldBorder,
+                leftFieldBorder,
+                playerTank,
+                ...bricksWall,
+                enemyTurret,
+                rockOne,
+                rockTwo);
         },
 
         startOrResumeGame: function() {

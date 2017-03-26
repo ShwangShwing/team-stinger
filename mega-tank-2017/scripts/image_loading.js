@@ -7,6 +7,8 @@ var bricksPic = document.createElement('img');
 var brokenBricksPic = document.createElement('img');
 var rockPic = document.createElement('img');
 var grassPatternPic = document.createElement('img');
+var turretBodyPic = document.createElement('img');
+var turretWeaponPic = document.createElement('img');
 
 var picsToLoad = 0; // set default to 0
 
@@ -16,6 +18,8 @@ function loadImg(imgElem, fileName) {
 
 function loadGraphics() {
     let imgList = [
+        { name: turretBodyPic, file: "turret-body.png" },
+        { name: turretWeaponPic, file: "turret-weapon.png" },
         { name: bricksPic, file: "bricks.png" },
         { name: littleBrokenBricksPic, file: "little-broken-bricks.png" },
         { name: mediumBrokenBricksPic, file: "medium-broken-bricks.png" },
