@@ -7,8 +7,19 @@ function getGameEngine(gameCanvas) {
     gameSoundtrack.loop = true;
     gameSoundtrack.volume = 0.5;
 
+    gameSoundtrack.addEventListener('play', function() {
+        document.getElementById('soundtrack-credits').style.display = "block";
+    });
+
+    gameSoundtrack.addEventListener('pause', function() {
+        document.getElementById('soundtrack-credits').style.display = "none";
+    });
+
     let fieldObjects = [];
     let playerTank;
+
+    const PAUSE_GAME_TEXT_BLINK_TIME_MS = 400;
+    let pauseGameTextLastDisplayTime = 0;
 
     // Use this function to launch shells. Provide it to a shooting object (e. g. turret) and use it from there
     function launchShell(positionX, positionY, shellDirection, shellWidth = 16, shellSpeed = 20, shellDamage = 30) {
@@ -70,6 +81,7 @@ function getGameEngine(gameCanvas) {
     return {
         setupNewGame: function() {
             isGameRunning = false;
+            gameSoundtrack.pause();
             gameSoundtrack.currentTime = 0;
 
             fieldObjects = [];
@@ -88,7 +100,7 @@ function getGameEngine(gameCanvas) {
             const leftFieldBorder = getInvisibleWall(-fieldBordersWidth / 2, fieldCanvas.height / 2, fieldBordersWidth);
 
             const bricksWall = [];
-            for (let i = 1; i <= 5; i+=1) {
+            for (let i = 1; i <= 5; i += 1) {
                 bricksWall.push(getBricks(700, 100 + (i * 50), 50))
             }
 
@@ -127,10 +139,20 @@ function getGameEngine(gameCanvas) {
             drawRect(context, 0, 0, fieldCanvas.width, fieldCanvas.height, 'DarkGray');
 
             fieldObjects.forEach(obj => obj.draw(fieldCanvas));
+
+            if (!isGameRunning) {
+                let nowTimeStamp = Date.now();
+                if (nowTimeStamp - pauseGameTextLastDisplayTime > PAUSE_GAME_TEXT_BLINK_TIME_MS * 2) {
+                    pauseGameTextLastDisplayTime = nowTimeStamp;
+                }
+                if (nowTimeStamp - pauseGameTextLastDisplayTime < PAUSE_GAME_TEXT_BLINK_TIME_MS) {
+                    drawText(context, "Game paused. Press spacebar to resume.", 20, 20, 'darkred');
+                }
+            }
         },
 
         isPlayerDead: function() {
             return playerTank.getHealth() <= 0;
         }
     }
-}
+};

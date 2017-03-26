@@ -219,8 +219,8 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     canvas.addEventListener('mousemove', handleMouse);
     canvas.addEventListener('click', handleMouseClick);
     canvas.addEventListener('contextmenu', handleRightMouseClick);
-    canvas.addEventListener('mousedown', handleMouseDown)
-    canvas.addEventListener('mouseup', handleMouseUp)
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('keydown', keyPressed);
     document.addEventListener('keyup', keyReleased);
 
