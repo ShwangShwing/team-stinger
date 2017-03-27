@@ -318,7 +318,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
         tankCenterPositionX += Math.cos(tankAng) * tankSpeed;
         tankCenterPositionY += Math.sin(tankAng) * tankSpeed;
-        console.log("Tank angle: " + tankAng);
+        // console.log("Tank angle: " + tankAng);
     }
 
     return {
