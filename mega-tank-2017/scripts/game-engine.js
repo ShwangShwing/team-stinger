@@ -17,6 +17,7 @@ function getGameEngine(gameCanvas) {
 
     let fieldObjects = [];
     let playerTank;
+    let enemyTurret;
 
     const PAUSE_GAME_TEXT_BLINK_TIME_MS = 400;
     let pauseGameTextLastDisplayTime = 0;
@@ -104,12 +105,14 @@ function getGameEngine(gameCanvas) {
                 bricksWall.push(getBricks(700, 100 + (i * 50), 50));
             }
 
-            const enemyTurret = getTurret(200, 200, 50);
 
             const rockOne = getRock(1000, 300);
             const rockTwo = getRock(200, 400);
 
             playerTank = getPlayerTank(390, 250, 100, launchShell);
+
+            enemyTurrets = [getTurret(900, 150, 50, launchShell, 90, -0.02),   
+                getTurret(900, 500, 50, launchShell, 25, 0.03)];
 
             fieldObjects.push(topFieldBorder,
                 rightFieldBorder,
@@ -117,7 +120,7 @@ function getGameEngine(gameCanvas) {
                 leftFieldBorder,
                 playerTank,
                 ...bricksWall,
-                enemyTurret,
+                ...enemyTurrets,
                 rockOne,
                 rockTwo);
         },
