@@ -16,6 +16,8 @@ function getGameEngine(gameCanvas) {
         document.getElementById('soundtrack-credits').style.display = "none";
     });
 
+    var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
+
     let fieldObjects = [];
     let playerTank;
     let enemyTurret;
@@ -140,6 +142,7 @@ function getGameEngine(gameCanvas) {
         gameOver: function() {
             isGameOver = true;
             gameSoundtrack.pause();
+            gameOverSound.play();
         },
 
         advanceOneFrame: function() {
