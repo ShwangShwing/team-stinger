@@ -255,7 +255,8 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     function movePlaySound() {
         if (keyHeld_Gas || keyHeld_Reverse || keyHeld_TurnLeft || keyHeld_TurnRight) {
             moveAudio.play();
-        } else {
+        } 
+        else {
             moveAudio.pause();
             moveAudio.currentTime = 0;
         }

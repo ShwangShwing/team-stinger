@@ -2,6 +2,7 @@ function getGameEngine(gameCanvas) {
     const fieldCanvas = gameCanvas;
 
     let isGameRunning = false;
+    var isGameOver = false;
     // Credits: band - Cupola, song - War, Album - Mistaken By Design
     const gameSoundtrack = new Audio('./sounds/Cupola-War.mp3');
     gameSoundtrack.loop = true;
@@ -82,6 +83,7 @@ function getGameEngine(gameCanvas) {
     return {
         setupNewGame: function() {
             isGameRunning = false;
+            isGameOver = false;
             gameSoundtrack.pause();
             gameSoundtrack.currentTime = 0;
 
@@ -135,8 +137,16 @@ function getGameEngine(gameCanvas) {
             gameSoundtrack.pause();
         },
 
+        gameOver: function() {
+            isGameOver = true;
+            gameSoundtrack.pause();
+        },
+
         advanceOneFrame: function() {
             if (!isGameRunning) {
+                return;
+            }
+            if (isGameOver) {
                 return;
             }
 
