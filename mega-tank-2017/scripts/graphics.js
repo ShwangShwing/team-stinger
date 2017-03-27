@@ -3,7 +3,8 @@ function drawRect(context, x, y, width, height, color) {
     context.fillRect(x, y, width, height);
 }
 
-function drawText(context, showWords, textX, textY, fillColor) {
+function drawText(context, showWords, textX, textY, fillColor, font) {
+    context.font = font;
     context.fillStyle = fillColor;
     context.fillText(showWords, textX, textY);
 }

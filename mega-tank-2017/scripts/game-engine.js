@@ -153,13 +153,15 @@ function getGameEngine(gameCanvas) {
 
             fieldObjects.forEach(obj => obj.draw(fieldCanvas));
 
+            drawText(context, playerTank.getHealth() + ' HP', 20, 580, 'white', '20px Pixeled');
+
             if (!isGameRunning) {
                 let nowTimeStamp = Date.now();
                 if (nowTimeStamp - pauseGameTextLastDisplayTime > PAUSE_GAME_TEXT_BLINK_TIME_MS * 2) {
                     pauseGameTextLastDisplayTime = nowTimeStamp;
                 }
                 if (nowTimeStamp - pauseGameTextLastDisplayTime < PAUSE_GAME_TEXT_BLINK_TIME_MS) {
-                    drawText(context, "Game paused. Press spacebar to resume.", 20, 20, 'red');
+                    drawText(context, "Game paused. Press spacebar to resume.", 20, 35, 'red', '16px Pixeled');
                 }
             }
         },
