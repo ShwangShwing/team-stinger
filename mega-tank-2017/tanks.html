@@ -10,7 +10,6 @@
 
 <body>
     <canvas id="gameCanvas" width="1300" height="600"></canvas>
-    <script src="scripts/jquery-3.2.0.min.js"></script>
     <script src="scripts/image_loading.js"></script>
     <script src="scripts/graphics.js"></script>
     <script src="scripts/rock.js"></script>
@@ -29,6 +28,15 @@
         </script>
         <button id="start-btn" onclick="startNewGame();">START</button>
     </div>
+
+    <div id="game-over">
+
+        <img id="game-over-skull" src="./img/gameoverskull.png" width="40%" height="40%">
+        <h3 id="heading"> GAME OVER !</h3>
+        <button id="button-restart" onclick="startNewGame()">Try Again?</button>
+
+    </div>
+
     <div id="soundtrack-credits">Soundtrack:
         <strong>Cupola</strong> -
         <strong>War</strong>
