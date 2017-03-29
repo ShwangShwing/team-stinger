@@ -1,8 +1,11 @@
+let win; // for debugging! invoke this function from the console to simulate victory
+
 function getGameEngine(gameCanvas) {
     const fieldCanvas = gameCanvas;
 
     let isGameRunning = false;
-    var isGameOver = false;
+    var hasPlayerLost = false;
+    let hasPlayerWon = false;
     // Credits: band - Cupola, song - War, Album - Mistaken By Design
     const gameSoundtrack = new Audio('./sounds/Cupola-War.mp3');
     gameSoundtrack.loop = true;
@@ -16,14 +19,17 @@ function getGameEngine(gameCanvas) {
         document.getElementById('soundtrack-credits').style.display = "none";
     });
 
-    var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
-
     let fieldObjects = [];
     let playerTank;
-    let enemyTurret;
 
     const PAUSE_GAME_TEXT_BLINK_TIME_MS = 400;
     let pauseGameTextLastDisplayTime = 0;
+
+    // for debugging
+    win = function() {
+        gameSoundtrack.pause();
+        hasPlayerWon = true;
+    }
 
     // Use this function to launch shells. Provide it to a shooting object (e. g. turret) and use it from there
     function launchShell(positionX, positionY, shellDirection, shellWidth = 16, shellSpeed = 20, shellDamage = 30) {
@@ -85,7 +91,8 @@ function getGameEngine(gameCanvas) {
     return {
         setupNewGame: function () {
             isGameRunning = false;
-            isGameOver = false;
+            hasPlayerLost = false;
+            hasPlayerWon = false;
             gameSoundtrack.pause();
             gameSoundtrack.currentTime = 0;
 
@@ -134,6 +141,7 @@ function getGameEngine(gameCanvas) {
 
             playerTank = getPlayerTank(50, 250, 100, launchShell);
 
+<<<<<<< HEAD
             enemyTurrets = [getTurret(900, 150, 50, launchShell, 90, -0.02, 6),
                 getTurret(900, 400, 50, launchShell, 25, 0.03, 6),
                 getTurret(250, 30, 50, launchShell, 90, -0.03, 6),
@@ -141,6 +149,14 @@ function getGameEngine(gameCanvas) {
                 getTurret(305, 420, 50, launchShell, 90, -0.05, 10),
                 getTurret(695, 45, 50, launchShell, 1.8, 0.00, 30),
                 getTurret(25, 100, 50, launchShell, 0, 0.00, 15)
+=======
+            const enemyTurrets = [getTurret(900, 150, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04),
+                getTurret(900, 500, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04)
+            ];
+
+            const enemyAntitankGuns = [getEnemyAntitankGun(1200, 150, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank),
+                getEnemyAntitankGun(900, 300, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank)
+>>>>>>> origin/master
             ];
 
             fieldObjects.push(topFieldBorder,
@@ -150,7 +166,13 @@ function getGameEngine(gameCanvas) {
                 playerTank,
                 ...bricksWall,
                 ...enemyTurrets,
+<<<<<<< HEAD
                 ...rocks);
+=======
+                ...enemyAntitankGuns,
+                rockOne,
+                rockTwo);
+>>>>>>> origin/master
         },
 
         startOrResumeGame: function () {
@@ -163,6 +185,7 @@ function getGameEngine(gameCanvas) {
             gameSoundtrack.pause();
         },
 
+<<<<<<< HEAD
         gameOver: function () {
             isGameOver = true;
             gameSoundtrack.pause();
@@ -170,16 +193,39 @@ function getGameEngine(gameCanvas) {
         },
 
         advanceOneFrame: function () {
+=======
+        advanceOneFrame: function() {
+>>>>>>> origin/master
             if (!isGameRunning) {
                 return;
             }
-            if (isGameOver) {
+            if (hasPlayerLost) {
+                return;
+            }
+            if (hasPlayerWon) {
                 return;
             }
 
-            fieldObjects.forEach(obj => obj.advanceOneFrame());
+            let aliveEnemyCount = 0;
+            fieldObjects.forEach(function(obj) {
+                obj.advanceOneFrame();
+                if (obj.isEnemy && obj.getHealth() > 0) {
+                    aliveEnemyCount++;
+                }
+            });
+
+            if (aliveEnemyCount <= 0) {
+                gameSoundtrack.pause();
+                hasPlayerWon = true;
+            }
+
             processCollisions();
-            fieldObjects = fieldObjects.filter(obj => !obj.canRemove())
+            fieldObjects = fieldObjects.filter(obj => !obj.canRemove());
+
+            if (playerTank.getHealth() <= 0) {
+                hasPlayerLost = true;
+                gameSoundtrack.pause();
+            }
         },
 
         drawFieldAndObjects: function () {
@@ -203,8 +249,17 @@ function getGameEngine(gameCanvas) {
             }
         },
 
+<<<<<<< HEAD
         isPlayerDead: function () {
             return playerTank.getHealth() <= 0;
+=======
+        hasPlayerLost: function() {
+            return hasPlayerLost;
+        },
+
+        hasPlayerWon: function() {
+            return hasPlayerWon;
+>>>>>>> origin/master
         }
     }
 };
