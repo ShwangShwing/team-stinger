@@ -42,17 +42,16 @@ function startNewGame() {
 function gameLoop() {
     gameEngine.advanceOneFrame();
     gameEngine.drawFieldAndObjects();
-
     if (gameEngine.isPlayerDead()) {
         drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
         drawText(context, "GAME OVER", 220, 320, 'red', '100px Pixeled');
         drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
 
         gameEngine.gameOver();
-        
+
         clearInterval(gameInteval);
 
-        $(document).one('click', function keyPressed(evt){
+        $(document).one('click', function keyPressed(evt) {
             startNewGame();
         });
 

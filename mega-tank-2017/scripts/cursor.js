@@ -1,0 +1,1 @@
+$("#gameCanvas").on("mouseover", function () { $(this).css('cursor', 'url(./img/crosshair.cur), none'); }).mouseout(function () { $(this).css('cursor', 'auto'); });

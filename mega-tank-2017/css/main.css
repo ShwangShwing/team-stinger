@@ -37,10 +37,6 @@ body {
     color: lawngreen;
 }
 
-#gameCanvas:active, #gameCanvas:focus, #gameCanvas:hover {
-    cursor: url('../img/crosshair.cur');
-}
-
 #soundtrack-credits {
     display: none;
 }
