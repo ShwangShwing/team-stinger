@@ -2,7 +2,7 @@ const gameFramesPerSecond = 30;
 let gameEngine;
 let gameInteval;
 
-window.onload = function() {
+window.onload = function () {
     canvas = document.getElementById('gameCanvas');
 
     loadGraphics();
@@ -24,7 +24,7 @@ window.onload = function() {
         };
     });
 
-    document.querySelector('#soundtrack-credits a').addEventListener('click', function() {
+    document.querySelector('#soundtrack-credits a').addEventListener('click', function () {
         gameEngine.pauseGame();
     })
 }
@@ -32,14 +32,11 @@ window.onload = function() {
 function startNewGame() {
     clearInterval(gameInteval);
     removeStartScreen();
-    removeGameOverScreen();
 
     gameEngine.setupNewGame();
 
     gameEngine.startOrResumeGame();
-
     gameInteval = setInterval(gameLoop, 1000 / gameFramesPerSecond);
-
 }
 
 function gameLoop() {
@@ -47,9 +44,18 @@ function gameLoop() {
     gameEngine.drawFieldAndObjects();
 
     if (gameEngine.isPlayerDead()) {
-        console.log('player is dead');
+        drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
+        drawText(context, "GAME OVER", 220, 320, 'red', '100px Pixeled');
+        drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+
+        gameEngine.gameOver();
+        
         clearInterval(gameInteval);
-        displayGameOverScreen();
+
+        $(document).one('click', function keyPressed(evt){
+            startNewGame();
+        });
+
     }
 }
 
@@ -60,18 +66,4 @@ function removeStartScreen() {
 
     startScreen.style.display = 'none';
     soundTrack.pause();
-}
-
-
-function displayGameOverScreen() {
-
-    var gameOverScreen = document.getElementById('game-over');
-    gameOverScreen.style.display = 'inline-block';
-
-
-}
-
-function removeGameOverScreen() {
-    var gameOverScreen = document.getElementById('game-over');
-    gameOverScreen.style.display = 'none';
 }
