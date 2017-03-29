@@ -199,9 +199,9 @@ function getGameEngine(gameCanvas) {
             }
 
             let aliveEnemyCount = 0;
-            fieldObjects.forEach(function (obj) {
-                obj.advanceOneFrame();
-                if (obj.isEnemy && obj.getHealth() > 0) {
+            fieldObjects.forEach(function (el) {
+                el.advanceOneFrame();
+                if (el.isEnemy && el.getHealth() > 0) {
                     aliveEnemyCount++;
                 }
             });
@@ -212,7 +212,7 @@ function getGameEngine(gameCanvas) {
             }
 
             processCollisions();
-            fieldObjects = fieldObjects.filter(obj => !obj.canRemove());
+            fieldObjects = fieldObjects.filter(el => !el.canRemove());
 
             if (playerTank.getHealth() <= 0) {
                 hasPlayerLost = true;
@@ -226,7 +226,7 @@ function getGameEngine(gameCanvas) {
 
             context.drawImage(grassPatternPic, 0, 0);
 
-            fieldObjects.forEach(obj => obj.draw(fieldCanvas));
+            fieldObjects.forEach(el => el.draw(fieldCanvas));
 
             drawText(context, playerTank.getHealth() + ' HP', 20, 580, 'white', '20px Pixeled');
 
