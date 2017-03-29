@@ -162,7 +162,7 @@ function getGameEngine(gameCanvas) {
                 getTurret(25, 100, 50, launchShell, 0, 0.00, 15)
             ];
 
-            const enemyAntitankGuns = [getEnemyAntitankGun(1250, 500, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank),
+            const enemyAntitankGuns = [getEnemyAntitankGun(1250, 450, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank),
                 getEnemyAntitankGun(695, 45, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank)
             ];
 
