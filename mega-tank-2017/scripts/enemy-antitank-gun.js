@@ -29,7 +29,7 @@ function getEnemyAntitankGun(initialPositionX, initialPositionY, turretSize, lau
     function aim() {
         let aimAngle = angle;
 
-        aimAngle = Math.atan2(target.getPositionY() - positionY, target.getPositionY() - positionX);
+        aimAngle = Math.atan2(target.getPositionY() - positionY, target.getPositionX() - positionX);
 
         if (aimAngle !== angle) {
             // this is the difference between the desired cannon angle and the current angle
