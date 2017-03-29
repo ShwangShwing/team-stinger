@@ -1,7 +1,7 @@
 # team-stinger
 
 # MEGA TANKS
-![sample](https://cloud.githubusercontent.com/assets/23581562/24470398/786917b0-14c7-11e7-8a1e-7ee45fb8fc47.jpg)
+![sample](https://cloud.githubusercontent.com/assets/23581562/24472881/0021d5d6-14d0-11e7-9255-79f1ddbf5ace.jpg)
 
 ## Youtube video:
 - Click [here](https://www.youtube.com/watch?v=ZUfITBznwsI) for the video.
