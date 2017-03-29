@@ -41,9 +41,6 @@ function startNewGame() {
 }
 
 function gameLoop() {
-    var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
-    var winSound = new Audio('./sounds/win-sound.wav');
-
     // prevent animating when the game state is updating
     if (animationRequestId) {
         window.cancelAnimationFrame(animationRequestId);
@@ -64,7 +61,7 @@ function gameLoop() {
             drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
         });
 
-
+        let winSound = new Audio('./sounds/win-sound.wav');
         winSound.play();
 
         clearInterval(gameInteval);
@@ -83,7 +80,7 @@ function gameLoop() {
             drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
         });
 
-
+        let gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
         gameOverSound.play();
 
         clearInterval(gameInteval);
