@@ -265,7 +265,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
             moveAudio.play();
         } else {
             moveAudio.pause();
-            moveAudio.currentTime = 0;
+            // moveAudio.currentTime = 0; //causes exception in firefox
         }
     }
 
@@ -274,7 +274,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
             machinegunAudio.play();
         } else {
             machinegunAudio.pause();
-            machinegunAudio.currentTime = 0;
+            //machinegunAudio.currentTime = 0; //causes exception in firefox
         }
     }
 

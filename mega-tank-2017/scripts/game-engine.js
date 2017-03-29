@@ -11,11 +11,11 @@ function getGameEngine(gameCanvas) {
     gameSoundtrack.loop = true;
     gameSoundtrack.volume = 0.5;
 
-    gameSoundtrack.addEventListener('play', function () {
+    gameSoundtrack.addEventListener('play', function() {
         document.getElementById('soundtrack-credits').style.display = "block";
     });
 
-    gameSoundtrack.addEventListener('pause', function () {
+    gameSoundtrack.addEventListener('pause', function() {
         document.getElementById('soundtrack-credits').style.display = "none";
     });
 
@@ -26,7 +26,7 @@ function getGameEngine(gameCanvas) {
     let pauseGameTextLastDisplayTime = 0;
 
     // for debugging
-    win = function () {
+    win = function() {
         gameSoundtrack.pause();
         hasPlayerWon = true;
     }
@@ -89,7 +89,7 @@ function getGameEngine(gameCanvas) {
     }
 
     return {
-        setupNewGame: function () {
+        setupNewGame: function() {
             isGameRunning = false;
             hasPlayerLost = false;
             hasPlayerWon = false;
@@ -125,7 +125,7 @@ function getGameEngine(gameCanvas) {
                 bricksWall.push(getBricks(-26 + (i * 50), 150, 50));
             }
             for (let i = 1; i <= 5; i += 1) {
-                bricksWall.push(getBricks(790, 60  + (i * 50), 50));
+                bricksWall.push(getBricks(790, 60 + (i * 50), 50));
             }
 
             const rocks = [
@@ -137,7 +137,7 @@ function getGameEngine(gameCanvas) {
                 getRock(175, 40),
                 getRock(620, 45),
                 getRock(770, 45)
-                ];
+            ];
 
             for (let i = 1; i <= 6; i += 1) {
                 rocks.push(getRock(550, -25 + (i * 70), 50));
@@ -177,17 +177,17 @@ function getGameEngine(gameCanvas) {
                 ...rocks);
         },
 
-        startOrResumeGame: function () {
+        startOrResumeGame: function() {
             isGameRunning = true;
             gameSoundtrack.play();
         },
 
-        pauseGame: function () {
+        pauseGame: function() {
             isGameRunning = false;
             gameSoundtrack.pause();
         },
 
-        advanceOneFrame: function () {
+        advanceOneFrame: function() {
             if (!isGameRunning) {
                 return;
             }
@@ -199,7 +199,7 @@ function getGameEngine(gameCanvas) {
             }
 
             let aliveEnemyCount = 0;
-            fieldObjects.forEach(function (el) {
+            fieldObjects.forEach(function(el) {
                 el.advanceOneFrame();
                 if (el.isEnemy && el.getHealth() > 0) {
                     aliveEnemyCount++;
@@ -220,7 +220,7 @@ function getGameEngine(gameCanvas) {
             }
         },
 
-        drawFieldAndObjects: function () {
+        drawFieldAndObjects: function() {
             let context = fieldCanvas.getContext('2d');
             drawRect(context, 0, 0, fieldCanvas.width, fieldCanvas.height, 'green');
 
@@ -241,11 +241,11 @@ function getGameEngine(gameCanvas) {
             }
         },
 
-        hasPlayerLost: function () {
+        hasPlayerLost: function() {
             return hasPlayerLost;
         },
 
-        hasPlayerWon: function () {
+        hasPlayerWon: function() {
             return hasPlayerWon;
         }
     }

@@ -1,6 +1,7 @@
 const gameFramesPerSecond = 30;
 let gameEngine;
 let gameInteval;
+let animationRequestId;
 
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
@@ -43,12 +44,26 @@ function gameLoop() {
     var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
     var winSound = new Audio('./sounds/win-sound.wav');
 
+    // prevent animating when the game state is updating
+    if (animationRequestId) {
+        window.cancelAnimationFrame(animationRequestId);
+        animationRequestId = undefined;
+    }
+
     gameEngine.advanceOneFrame();
-    gameEngine.drawFieldAndObjects();
+
+    animationRequestId = window.requestAnimationFrame(function() {
+        gameEngine.drawFieldAndObjects();
+        animationRequestId = undefined;
+    });
+
     if (gameEngine.hasPlayerWon()) {
-        drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
-        drawText(context, "THE ENEMY IS DESTROYED!", 20, 320, 'red', '60px Pixeled');
-        drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+        animationRequestId = window.requestAnimationFrame(function() {
+            drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
+            drawText(context, "THE ENEMY IS DESTROYED!", 20, 320, 'red', '60px Pixeled');
+            drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+        });
+
 
         winSound.play();
 
@@ -62,9 +77,12 @@ function gameLoop() {
         }, 1000);
 
     } else if (gameEngine.hasPlayerLost()) {
-        drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
-        drawText(context, "TANK DESTROYED!", 78, 320, 'red', '80px Pixeled');
-        drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+        animationRequestId = window.requestAnimationFrame(function() {
+            drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
+            drawText(context, "TANK DESTROYED!", 78, 320, 'red', '80px Pixeled');
+            drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+        });
+
 
         gameOverSound.play();
 
