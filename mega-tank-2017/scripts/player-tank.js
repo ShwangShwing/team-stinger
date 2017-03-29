@@ -215,8 +215,10 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
             keyHeld_Reverse = true;
         }
         if (evt.key == 'Shift') {
+            if (!isManualAim) {
+                doParkCannon = false;
+            }
             isManualAim = true;
-            doParkCannon = false;
         }
         if (evt.code == 'KeyQ') {
             rotateCannonCounterclockwise = true;
