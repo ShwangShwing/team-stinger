@@ -1,19 +1,6 @@
 function getRock(initialPositionX, initialPositionY) {
-    function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    var posX, posY
-
-    do {
-      posX = getRandomInt(100, 1200)
-    }
-    while ((posX > 330 && posX < 450) && (posX > 675 && posX < 725))
-
-    do {
-      posY = getRandomInt(100, 500)
-    }
-    while ((posY > 190 && posY < 310) && (posY > 125 && posY < 375))
-
+    var posX = initialPositionX
+    var posY = initialPositionY;
     const width = 75; // rock size
 
     function drawRock(context) {

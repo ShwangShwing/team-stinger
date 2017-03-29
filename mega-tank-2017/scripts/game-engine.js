@@ -8,11 +8,11 @@ function getGameEngine(gameCanvas) {
     gameSoundtrack.loop = true;
     gameSoundtrack.volume = 0.5;
 
-    gameSoundtrack.addEventListener('play', function() {
+    gameSoundtrack.addEventListener('play', function () {
         document.getElementById('soundtrack-credits').style.display = "block";
     });
 
-    gameSoundtrack.addEventListener('pause', function() {
+    gameSoundtrack.addEventListener('pause', function () {
         document.getElementById('soundtrack-credits').style.display = "none";
     });
 
@@ -83,7 +83,7 @@ function getGameEngine(gameCanvas) {
     }
 
     return {
-        setupNewGame: function() {
+        setupNewGame: function () {
             isGameRunning = false;
             isGameOver = false;
             gameSoundtrack.pause();
@@ -105,18 +105,43 @@ function getGameEngine(gameCanvas) {
             const leftFieldBorder = getInvisibleWall(-fieldBordersWidth / 2, fieldCanvas.height / 2, fieldBordersWidth);
 
             const bricksWall = [];
-            for (let i = 1; i <= 5; i += 1) {
-                bricksWall.push(getBricks(700, 100 + (i * 50), 50));
+
+            bricksWall.push(getBricks(225, 400, 50));
+            bricksWall.push(getBricks(225, 450, 50));
+            bricksWall.push(getBricks(225, 500, 50));
+            bricksWall.push(getBricks(275, 500, 50));
+            bricksWall.push(getBricks(325, 500, 50));
+
+            for (let i = 1; i <= 7; i += 1) {
+                bricksWall.push(getBricks(-26 + (i * 50), 350, 50));
+                bricksWall.push(getBricks(-26 + (i * 50), 150, 50));
             }
 
 
-            const rockOne = getRock(1000, 300);
-            const rockTwo = getRock(200, 400);
 
-            playerTank = getPlayerTank(390, 250, 100, launchShell);
+            const rocks = [getRock(900, 300)]
 
-            enemyTurrets = [getTurret(900, 150, 50, launchShell, 90, -0.02),   
-                getTurret(900, 500, 50, launchShell, 25, 0.03)];
+            rocks.push(getRock(175, 40, 50));
+            rocks.push(getRock(620, 45, 50));
+            rocks.push(getRock(770, 45, 50));
+
+            for (let i = 1; i <= 6; i += 1) {
+                rocks.push(getRock(550, -25 + (i * 70), 50));
+            }
+            for (let i = 1; i <= 6; i += 1) {
+                rocks.push(getRock(550, -25 + (i * 70), 50));
+            }
+
+            playerTank = getPlayerTank(50, 250, 100, launchShell);
+
+            enemyTurrets = [getTurret(900, 150, 50, launchShell, 90, -0.02, 6),
+                getTurret(900, 400, 50, launchShell, 25, 0.03, 6),
+                getTurret(250, 30, 50, launchShell, 90, -0.03, 6),
+                getTurret(100, 450, 50, launchShell, 90, 0.02, 6),
+                getTurret(305, 420, 50, launchShell, 90, -0.05, 10),
+                getTurret(695, 45, 50, launchShell, 1.8, 0.00, 30),
+                getTurret(25, 100, 50, launchShell, 0, 0.00, 15)
+            ];
 
             fieldObjects.push(topFieldBorder,
                 rightFieldBorder,
@@ -125,27 +150,26 @@ function getGameEngine(gameCanvas) {
                 playerTank,
                 ...bricksWall,
                 ...enemyTurrets,
-                rockOne,
-                rockTwo);
+                ...rocks);
         },
 
-        startOrResumeGame: function() {
+        startOrResumeGame: function () {
             isGameRunning = true;
             gameSoundtrack.play();
         },
 
-        pauseGame: function() {
+        pauseGame: function () {
             isGameRunning = false;
             gameSoundtrack.pause();
         },
 
-        gameOver: function() {
+        gameOver: function () {
             isGameOver = true;
             gameSoundtrack.pause();
             gameOverSound.play();
         },
 
-        advanceOneFrame: function() {
+        advanceOneFrame: function () {
             if (!isGameRunning) {
                 return;
             }
@@ -158,7 +182,7 @@ function getGameEngine(gameCanvas) {
             fieldObjects = fieldObjects.filter(obj => !obj.canRemove())
         },
 
-        drawFieldAndObjects: function() {
+        drawFieldAndObjects: function () {
             let context = fieldCanvas.getContext('2d');
             drawRect(context, 0, 0, fieldCanvas.width, fieldCanvas.height, 'green');
 
@@ -179,7 +203,7 @@ function getGameEngine(gameCanvas) {
             }
         },
 
-        isPlayerDead: function() {
+        isPlayerDead: function () {
             return playerTank.getHealth() <= 0;
         }
     }

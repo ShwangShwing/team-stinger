@@ -1,5 +1,5 @@
-function getTurret(initialPositionX, initialPositionY, turretSize, launchShellFunction, startAngle, initialSpinSpeed) {
-    const RELOAD_TIME = 5;
+function getTurret(initialPositionX, initialPositionY, turretSize, launchShellFunction, startAngle, initialSpinSpeed, reloadTime) {
+    const RELOAD_TIME = reloadTime;
     let spinSpeed = initialSpinSpeed;
     let positionX = initialPositionX;
     let positionY = initialPositionY;
