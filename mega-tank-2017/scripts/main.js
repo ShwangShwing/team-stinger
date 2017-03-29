@@ -41,6 +41,7 @@ function startNewGame() {
 
 function gameLoop() {
     var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
+    var winSound = new Audio('./sounds/win-sound.wav');
 
     gameEngine.advanceOneFrame();
     gameEngine.drawFieldAndObjects();
@@ -48,6 +49,8 @@ function gameLoop() {
         drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
         drawText(context, "THE ENEMY IS DESTROYED!", 20, 320, 'red', '60px Pixeled');
         drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+
+        winSound.play();
 
         clearInterval(gameInteval);
 
