@@ -4,13 +4,13 @@ function getTurret(initialPositionX, initialPositionY, turretSize, launchShellFu
     let positionX = initialPositionX;
     let positionY = initialPositionY;
     let health = 100;
-    let angle = startAngle ;
+    let angle = startAngle;
     let framesBeforeMachineGunCanShootAgain = 0;
     const launchShell = launchShellFunction;
     const width = turretSize;
     const shootDistance = (width * 0.7071 + 20);
 
-        function fireMachineGun() {
+    function fireMachineGun() {
         if (framesBeforeMachineGunCanShootAgain > 0) {
             // reloading
             return;
@@ -26,6 +26,8 @@ function getTurret(initialPositionX, initialPositionY, turretSize, launchShellFu
     }
 
     return {
+        isEnemy: true,
+
         getPositionX: function() {
             return positionX;
         },
@@ -53,8 +55,7 @@ function getTurret(initialPositionX, initialPositionY, turretSize, launchShellFu
             drawRotatingImg(context, turretWeaponPic, positionX, positionY, angle, 24, 24);
         },
 
-        onColide: function(otherObject) {
-        },
+        onColide: function(otherObject) {},
 
         takeDamage: function(damagePoints) {
             health -= damagePoints;

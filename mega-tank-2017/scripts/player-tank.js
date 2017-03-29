@@ -1,3 +1,6 @@
+//global function that kills the tank (enter in console for debugging purpuses)
+let kill;
+
 function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launchShellFunction) {
     // keyCodes
     const KEY_W = 87;
@@ -62,6 +65,11 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     const moveAudio = new Audio('./sounds/move.wav');
     const shotAudio = new Audio('./sounds/shot.wav');
     const machinegunAudio = new Audio('./sounds/machinegun.wav');
+
+    // debugging function
+    kill = function() {
+        health = 0;
+    }
 
     // INPUT FUNCTIONS
     function aim() {
@@ -255,8 +263,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     function movePlaySound() {
         if (keyHeld_Gas || keyHeld_Reverse || keyHeld_TurnLeft || keyHeld_TurnRight) {
             moveAudio.play();
-        } 
-        else {
+        } else {
             moveAudio.pause();
             moveAudio.currentTime = 0;
         }
@@ -283,14 +290,26 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     canvas.onselectstart = function() { return false; }
 
     function drawTankBody(context) {
-        drawRotatingImg(context, tankPic, tankCenterPositionX, tankCenterPositionY, tankAng, tankPic.width / 2, tankPic.height / 2);
+        let tankPicture;
+        let cannonPicture;
+        if (health > 0) {
+            tankPicture = tankPic;
+        } else {
+            tankPicture = tankDestroyedPic;
+        }
+        drawRotatingImg(context, tankPicture, tankCenterPositionX, tankCenterPositionY, tankAng, tankPicture.width / 2, tankPicture.height / 2);
 
         // *** option with simple rectangle instead of tankPic ***
         // drawRotatingObj(tankX, tankY, tankAng, TANK_LENGHT/2, TANK_THICK/2, TANK_LENGHT, TANK_THICK, 'DarkOliveGreen');
     }
 
     function drawCannon(context) {
-        drawRotatingImg(context, cannonPic, tankCenterPositionX, tankCenterPositionY, cannonAngle, cannonPic.width * 0.25, cannonPic.height / 2);
+        if (health > 0) {
+            cannonPicture = cannonPic;
+        } else {
+            cannonPicture = cannonDestroyedPic;
+        }
+        drawRotatingImg(context, cannonPicture, tankCenterPositionX, tankCenterPositionY, cannonAngle, cannonPicture.width * 0.25, cannonPicture.height / 2);
 
         // *** option with simple rectangle instead of cannonPic ***
         // drawRotatingObj(tankX, tankY, cannonAng, CANNON_LENGTH * 0.1, CANNON_THICK/2, CANNON_LENGTH, CANNON_THICK, 'OliveDrab');
@@ -299,7 +318,7 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
     function moveTank() {
         tankSpeed *= GROUNDSPEED_DECAY;
 
-        if (Math.abs(tankSpeed) < MAX_SPEED) {
+        if (tankSpeed < MAX_SPEED) {
             if (keyHeld_Gas) {
                 tankSpeed += DRIVE_POWER;
             }
@@ -340,6 +359,10 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
         },
 
         advanceOneFrame: function() {
+            if (this.getHealth() <= 0) {
+                return;
+            }
+
             moveTank();
             aim();
             movePlaySound();
@@ -413,6 +436,12 @@ function getPlayerTank(initialPositionX, initialPositionY, initialHealth, launch
 
         takeDamage: function(damagePoints) {
             health -= damagePoints;
+            if (this.getHealth() <= 0) {
+                moveAudio.pause();
+                moveAudio.currentTime = 0;
+                machinegunAudio.pause();
+                machinegunAudio.currentTime = 0;
+            }
         },
 
         canRemove: function() {

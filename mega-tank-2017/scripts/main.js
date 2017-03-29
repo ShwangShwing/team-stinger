@@ -2,7 +2,7 @@ const gameFramesPerSecond = 30;
 let gameEngine;
 let gameInteval;
 
-window.onload = function () {
+window.onload = function() {
     canvas = document.getElementById('gameCanvas');
 
     loadGraphics();
@@ -24,7 +24,7 @@ window.onload = function () {
         };
     });
 
-    document.querySelector('#soundtrack-credits a').addEventListener('click', function () {
+    document.querySelector('#soundtrack-credits a').addEventListener('click', function() {
         gameEngine.pauseGame();
     })
 }
@@ -40,20 +40,39 @@ function startNewGame() {
 }
 
 function gameLoop() {
+    var gameOverSound = new Audio('./sounds/copyrighted-free-game-over.wav');
+
     gameEngine.advanceOneFrame();
     gameEngine.drawFieldAndObjects();
-    if (gameEngine.isPlayerDead()) {
+    if (gameEngine.hasPlayerWon()) {
         drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
-        drawText(context, "GAME OVER", 220, 320, 'red', '100px Pixeled');
+        drawText(context, "THE ENEMY IS DESTROYED!", 20, 320, 'red', '60px Pixeled');
         drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
-
-        gameEngine.gameOver();
 
         clearInterval(gameInteval);
 
-        $(document).one('click', function keyPressed(evt) {
-            startNewGame();
-        });
+        // set click event after one second to avoid user clicking while still in the game prematurely starting new game
+        setTimeout(function() {
+            $(document).one('click', function keyPressed(evt) {
+                startNewGame();
+            });
+        }, 1000);
+
+    } else if (gameEngine.hasPlayerLost()) {
+        drawRect(context, 0, 0, canvas.width, canvas.height, 'rgba(192,192,192,0.3)');
+        drawText(context, "TANK DESTROYED!", 78, 320, 'red', '80px Pixeled');
+        drawText(context, "Click to start a new game.", 330, 380, 'white', '30px Pixeled');
+
+        gameOverSound.play();
+
+        clearInterval(gameInteval);
+
+        // set click event after one second to avoid user clicking while still in the game prematurely starting new game
+        setTimeout(function() {
+            $(document).one('click', function keyPressed(evt) {
+                startNewGame();
+            });
+        }, 1000);
 
     }
 }
