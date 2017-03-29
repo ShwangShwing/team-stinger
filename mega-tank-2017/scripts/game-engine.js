@@ -153,7 +153,6 @@ function getGameEngine(gameCanvas) {
             // ];
 
             const enemyTurrets = [
-                getTurret(1200, 100, 50, launchShell, 90, 0.04, 6),
                 getTurret(900, 100, 50, launchShell, 90, -0.02, 6),
                 getTurret(825, 375, 50, launchShell, 25, 0.03, 6),
                 getTurret(250, 30, 50, launchShell, 90, -0.03, 6),
@@ -163,7 +162,8 @@ function getGameEngine(gameCanvas) {
             ];
 
             const enemyAntitankGuns = [getEnemyAntitankGun(1250, 450, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank),
-                getEnemyAntitankGun(695, 45, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank)
+                getEnemyAntitankGun(695, 45, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank),
+                getEnemyAntitankGun(1200, 100, 50, launchShell, Math.random() * Math.PI * 2, Math.random() * 0.08 - 0.04, playerTank)
             ];
 
             fieldObjects.push(topFieldBorder,
